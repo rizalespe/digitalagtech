@@ -318,7 +318,7 @@ html, body { height: 100%; font-family: var(--font-body); background: #ffffff; c
 .auth-divider::before,
 .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-.btn-google {
+a.btn-google {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -328,18 +328,17 @@ html, body { height: 100%; font-family: var(--font-body); background: #ffffff; c
   border-radius: var(--radius-md);
   border: 1.5px solid #d5e0d5;
   background: #ffffff;
-  color: #1a1f1a;
+  color: #1a1f1a !important;
   font-size: 14px;
   font-weight: 600;
   font-family: var(--font-body);
-  text-decoration: none;
+  text-decoration: none !important;
   cursor: pointer;
+  box-sizing: border-box;
   transition: background .2s, border-color .2s, box-shadow .2s;
 }
-.btn-google:hover {
+a.btn-google:hover {
   background: #f5f8f0;
   border-color: #aaa;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
-  text-decoration: none;
-  color: #1a1f1a;
 }
