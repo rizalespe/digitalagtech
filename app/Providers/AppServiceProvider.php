@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Event;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Explicitly register our SVG icon component so it takes priority over blade-icons.
+        Blade::component('components.icon', 'icon');
+
         Paginator::defaultView('partials.pagination');
 
         View::composer('partials.footer', function ($view) {
