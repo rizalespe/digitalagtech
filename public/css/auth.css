@@ -302,3 +302,40 @@ html, body { height: 100%; font-family: var(--font-body); background: #ffffff; c
   color: #8a1f12;
 }
 .auth-alert--success { background: var(--green-50); color: var(--green-800); }
+
+/* ── Google OAuth ── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block: 20px;
+  color: var(--fg-subtle);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.auth-divider::before,
+.auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .2s, border-color .2s, box-shadow .2s;
+}
+.btn-google:hover {
+  background: var(--bg-soft);
+  border-color: #aaa;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
