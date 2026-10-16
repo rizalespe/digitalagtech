@@ -326,16 +326,20 @@ html, body { height: 100%; font-family: var(--font-body); background: #ffffff; c
   width: 100%;
   padding: 13px 20px;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--border);
-  background: var(--bg-card);
-  color: var(--fg);
+  border: 1.5px solid #d5e0d5;
+  background: #ffffff;
+  color: #1a1f1a;
   font-size: 14px;
   font-weight: 600;
+  font-family: var(--font-body);
   text-decoration: none;
+  cursor: pointer;
   transition: background .2s, border-color .2s, box-shadow .2s;
 }
 .btn-google:hover {
-  background: var(--bg-soft);
+  background: #f5f8f0;
   border-color: #aaa;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  text-decoration: none;
+  color: #1a1f1a;
 }
