@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\ToolkitStage;
+use App\Models\Concerns\ResolvesMediaUrl;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
+
+#[Fillable([
+    'title', 'slug', 'stage', 'description', 'thumbnail', 'video_url', 'pdf_path',
+    'tools_count', 'activities_count', 'duration_label', 'sort_order', 'is_active',
+])]
+#[RouteKey('slug')]
+class Toolkit extends Model
+{
+    use ResolvesMediaUrl;
+
+    protected function casts(): array
+    {
+        return [
+            'stage' => ToolkitStage::class,
+            'is_active' => 'boolean',
+        ];
+    }
+
+    #[Scope]
+    protected function active(Builder $query): void
+    {
+        $query->where('is_active', true)->orderBy('sort_order');
+    }
+
+    protected function thumbnailUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->mediaUrl($this->thumbnail));
+    }
+
+    protected function pdfUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->mediaUrl($this->pdf_path));
+    }
+}
