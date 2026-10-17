@@ -2,7 +2,7 @@
 
 @section('title', 'Diagnose Test — Startup Assessment')
 
-@push('head')
+@push('styles')
 <style>
 /* ── Assessment page ── */
 .assessment-page { background: var(--bg); }
@@ -158,6 +158,7 @@
 @endpush
 
 @section('content')
+
 <div class="assessment-page">
 
     <div class="assessment-hero">

@@ -2,7 +2,7 @@
 
 @section('title', 'Assessment Result — ' . $attempt->startup_name)
 
-@push('head')
+@push('styles')
 <style>
 /* ── Result page ── */
 .result-hero {
