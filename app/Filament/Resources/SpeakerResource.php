@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SpeakerResource\Pages;
+use App\Filament\Support\ImageField;
 use App\Models\Speaker;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -63,17 +64,9 @@ class SpeakerResource extends Resource
                 ]),
             ])->columns(2),
 
-            Forms\Components\Section::make('Photo')->schema([
-                Forms\Components\FileUpload::make('photo')
-                    ->image()
-                    ->disk('public')
-                    ->directory('speakers')
-                    ->imageResizeMode('cover')
-                    ->imageCropAspectRatio('1:1')
-                    ->imageResizeTargetWidth(640)
-                    ->imageResizeTargetHeight(640)
-                    ->columnSpanFull(),
-            ]),
+            Forms\Components\Section::make('Photo')->schema(
+                ImageField::make('photo', 'Photo', 'speakers')
+            ),
         ]);
     }
 
@@ -82,7 +75,7 @@ class SpeakerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
-                    ->disk('public')
+                    ->getStateUsing(fn ($record) => $record->photo ? asset($record->photo) : null)
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('title')->searchable()->limit(40),

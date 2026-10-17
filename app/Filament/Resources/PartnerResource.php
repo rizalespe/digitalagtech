@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PartnerResource\Pages;
+use App\Filament\Support\ImageField;
 use App\Models\Partner;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,12 +25,7 @@ class PartnerResource extends Resource
             Forms\Components\TextInput::make('website_url')->url()->maxLength(255),
             Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
             Forms\Components\Toggle::make('is_active')->default(true),
-            Forms\Components\FileUpload::make('logo')
-                ->image()
-                ->required()
-                ->disk('public')
-                ->directory('partners')
-                ->columnSpanFull(),
+            ...ImageField::make('logo', 'Logo', 'partners'),
         ])->columns(2);
     }
 
@@ -37,7 +33,9 @@ class PartnerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('logo')->disk('public')->height(32),
+                Tables\Columns\ImageColumn::make('logo')
+                    ->getStateUsing(fn ($record) => $record->logo ? asset($record->logo) : null)
+                    ->height(32),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('website_url')->limit(40),
                 Tables\Columns\IconColumn::make('is_active')->boolean(),

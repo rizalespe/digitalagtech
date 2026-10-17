@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\EventType;
 use App\Filament\Resources\EventResource\Pages;
+use App\Filament\Support\ImageField;
 use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -68,15 +69,15 @@ class EventResource extends Resource
             ])->columns(2),
 
             Forms\Components\Section::make('Media')->schema([
-                Forms\Components\FileUpload::make('thumbnail')
-                    ->image()
-                    ->disk('public')
-                    ->directory('events'),
-                Forms\Components\FileUpload::make('flyer')
-                    ->image()
-                    ->disk('public')
-                    ->directory('events'),
-            ])->columns(2),
+                Forms\Components\Grid::make(2)->schema([
+                    Forms\Components\Fieldset::make('Thumbnail')->schema(
+                        ImageField::make('thumbnail', 'Thumbnail', 'events')
+                    ),
+                    Forms\Components\Fieldset::make('Flyer')->schema(
+                        ImageField::make('flyer', 'Flyer', 'events')
+                    ),
+                ]),
+            ]),
         ]);
     }
 
@@ -84,7 +85,8 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail')->disk('public'),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->getStateUsing(fn ($record) => $record->thumbnail ? asset($record->thumbnail) : null),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(40),
                 Tables\Columns\BadgeColumn::make('type')
                     ->colors(['primary' => 'webinar', 'success' => 'workshop']),

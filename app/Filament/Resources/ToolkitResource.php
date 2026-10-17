@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\ToolkitStage;
 use App\Filament\Resources\ToolkitResource\Pages;
+use App\Filament\Support\ImageField;
 use App\Models\Toolkit;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -47,13 +48,9 @@ class ToolkitResource extends Resource
                 Forms\Components\Textarea::make('description')->rows(3)->columnSpanFull(),
             ])->columns(2),
 
-            Forms\Components\Section::make('Cover')->schema([
-                Forms\Components\FileUpload::make('cover')
-                    ->image()
-                    ->disk('public')
-                    ->directory('toolkits')
-                    ->columnSpanFull(),
-            ]),
+            Forms\Components\Section::make('Cover')->schema(
+                ImageField::make('cover', 'Cover', 'toolkits')
+            ),
         ]);
     }
 
@@ -61,7 +58,8 @@ class ToolkitResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('cover')->disk('public'),
+                Tables\Columns\ImageColumn::make('cover')
+                    ->getStateUsing(fn ($record) => $record->cover ? asset($record->cover) : null),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(50),
                 Tables\Columns\BadgeColumn::make('stage')
                     ->colors(['warning' => 'discover', 'primary' => 'build', 'success' => 'scale']),

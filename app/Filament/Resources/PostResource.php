@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
+use App\Filament\Support\ImageField;
 use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -50,13 +51,9 @@ class PostResource extends Resource
                     ->columnSpanFull(),
             ])->columns(2),
 
-            Forms\Components\Section::make('Thumbnail')->schema([
-                Forms\Components\FileUpload::make('thumbnail')
-                    ->image()
-                    ->disk('public')
-                    ->directory('news')
-                    ->columnSpanFull(),
-            ]),
+            Forms\Components\Section::make('Thumbnail')->schema(
+                ImageField::make('thumbnail', 'Thumbnail', 'news')
+            ),
         ]);
     }
 
@@ -64,7 +61,9 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail')->disk('public'),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->getStateUsing(fn ($record) => $record->thumbnail ? asset($record->thumbnail) : null)
+                    ->extraImgAttributes(['style' => 'object-fit:cover']),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(50),
                 Tables\Columns\TextColumn::make('author_name')->searchable(),
                 Tables\Columns\TextColumn::make('published_at')->date('d M Y')->sortable(),
