@@ -37,7 +37,7 @@
 .step-item.done .step-num { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.4); }
 .step-sep { width: 40px; height: 2px; background: rgba(255,255,255,.2); margin: 0 8px; }
 
-.result-hero-inner { max-width: 860px; margin: 0 auto; }
+.result-hero-inner { max-width: 960px; margin: 0 auto; }
 
 .stage-badge-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 .stage-badge {
@@ -78,7 +78,7 @@
 .score-desc p { color: rgba(255,255,255,.85); font-size: 15px; line-height: 1.6; }
 
 /* ── Body ── */
-.result-body { max-width: 860px; margin: 0 auto; padding: 48px var(--pad-x) 80px; }
+.result-body { max-width: 960px; margin: 0 auto; padding: 48px var(--pad-x) 80px; }
 
 .result-section-title { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 14px; }
 

@@ -41,7 +41,7 @@
 .assessment-hero p { color: rgba(255,255,255,.75); margin-top: 10px; font-size: 16px; }
 
 /* ── Form layout ── */
-.assessment-body { max-width: 800px; margin: 0 auto; padding: 48px var(--pad-x) 80px; }
+.assessment-body { max-width: 960px; margin: 0 auto; padding: 48px var(--pad-x) 80px; }
 
 .form-section {
     background: var(--bg-card);
@@ -162,7 +162,7 @@
 <div class="assessment-page">
 
     <div class="assessment-hero">
-        <div style="max-width:800px;margin:0 auto">
+        <div style="max-width:960px;margin:0 auto">
             <div class="assessment-steps">
                 <div class="step-item active">
                     <span class="step-num">01</span>
