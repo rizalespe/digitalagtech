@@ -27,14 +27,16 @@ class ContentSeeder extends Seeder
             HTML;
 
         foreach ($posts as $i => [$title, $image]) {
-            Post::create([
-                'title' => $title,
-                'slug' => Str::slug($title),
-                'excerpt' => $excerpt,
-                'body' => $body,
-                'thumbnail' => "images/news/{$image}.jpg",
-                'published_at' => now()->subDays($i + 1),
-            ]);
+            Post::firstOrCreate(
+                ['slug' => Str::slug($title)],
+                [
+                    'title'        => $title,
+                    'excerpt'      => $excerpt,
+                    'body'         => $body,
+                    'thumbnail'    => "images/news/{$image}.jpg",
+                    'published_at' => now()->subDays($i + 1),
+                ]
+            );
         }
 
         $webinarId = Event::where('slug', 'from-idea-to-scale-webinar')->value('id');
@@ -46,12 +48,14 @@ class ContentSeeder extends Seeder
         ];
 
         foreach ($photos as $i => [$image, $caption]) {
-            GalleryPhoto::create([
-                'event_id' => $webinarId,
-                'image' => "images/gallery/{$image}.jpg",
-                'caption' => $caption,
-                'sort_order' => $i + 1,
-            ]);
+            GalleryPhoto::firstOrCreate(
+                ['image' => "images/gallery/{$image}.jpg"],
+                [
+                    'event_id'   => $webinarId,
+                    'caption'    => $caption,
+                    'sort_order' => $i + 1,
+                ]
+            );
         }
 
         $partners = [
@@ -64,11 +68,13 @@ class ContentSeeder extends Seeder
         ];
 
         foreach ($partners as $i => [$name, $logo]) {
-            Partner::create([
-                'name' => $name,
-                'logo' => "images/partners/{$logo}.png",
-                'sort_order' => $i + 1,
-            ]);
+            Partner::firstOrCreate(
+                ['name' => $name],
+                [
+                    'logo'       => "images/partners/{$logo}.png",
+                    'sort_order' => $i + 1,
+                ]
+            );
         }
     }
 }

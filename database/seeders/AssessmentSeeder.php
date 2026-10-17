@@ -30,11 +30,14 @@ class AssessmentSeeder extends Seeder
         ];
 
         foreach (array_keys($dimensions) as $order => $name) {
-            $dimension = AssessmentDimension::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
-                'sort_order' => $order + 1,
-            ]);
+            $dimension = AssessmentDimension::firstOrCreate(
+                ['slug' => Str::slug($name)],
+                ['name' => $name, 'sort_order' => $order + 1]
+            );
+
+            if (! $dimension->wasRecentlyCreated) {
+                continue;
+            }
 
             $question = $dimension->questions()->create([
                 'question' => $dimensions[$name],

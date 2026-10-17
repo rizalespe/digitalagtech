@@ -26,18 +26,22 @@ class ProgramSeeder extends Seeder
         foreach ($programs as $i => $data) {
             $slug = Str::slug($data['name']);
 
-            $program = IncubationProgram::create([
-                ...$data,
-                'slug' => $slug,
-                'cover_image' => "images/programs/{$slug}.jpg",
-                'sort_order' => $i + 1,
-            ]);
+            $program = IncubationProgram::firstOrCreate(
+                ['slug' => $slug],
+                [
+                    ...$data,
+                    'cover_image' => "images/programs/{$slug}.jpg",
+                    'sort_order'  => $i + 1,
+                ]
+            );
 
+            if ($program->wasRecentlyCreated) {
             $program->photos()->createMany([
                 ['image' => 'images/gallery/bi-gallery-1.jpg', 'caption' => "Peserta {$data['name']} berfoto bersama", 'sort_order' => 1],
                 ['image' => 'images/gallery/bi-gallery-2.jpg', 'caption' => "Sesi mentoring {$data['name']}", 'sort_order' => 2],
                 ['image' => 'images/gallery/bi-gallery-3.jpg', 'caption' => "Peserta {$data['name']} menempel sticky notes", 'sort_order' => 3],
             ]);
+            } // end wasRecentlyCreated
         }
 
         $toolkits = [
@@ -49,17 +53,19 @@ class ProgramSeeder extends Seeder
         ];
 
         foreach ($toolkits as $i => [$title, $stage, $image, $description, $tools, $activities, $duration]) {
-            Toolkit::create([
-                'title' => $title,
-                'slug' => Str::slug($title),
-                'stage' => $stage,
-                'description' => $description,
-                'thumbnail' => "images/toolkits/{$image}.jpg",
-                'tools_count' => $tools,
-                'activities_count' => $activities,
-                'duration_label' => $duration,
-                'sort_order' => $i + 1,
-            ]);
+            Toolkit::firstOrCreate(
+                ['slug' => Str::slug($title)],
+                [
+                    'title'            => $title,
+                    'stage'            => $stage,
+                    'description'      => $description,
+                    'thumbnail'        => "images/toolkits/{$image}.jpg",
+                    'tools_count'      => $tools,
+                    'activities_count' => $activities,
+                    'duration_label'   => $duration,
+                    'sort_order'       => $i + 1,
+                ]
+            );
         }
     }
 }

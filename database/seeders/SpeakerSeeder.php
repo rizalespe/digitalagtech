@@ -25,17 +25,19 @@ class SpeakerSeeder extends Seeder
         ];
 
         foreach ($speakers as $order => [$name, $title, $expertise, $photo, $featured]) {
-            Speaker::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
-                'title' => $title,
-                'expertise' => $expertise,
-                'photo' => $photo ? "images/speakers/{$photo}.jpg" : null,
-                'linkedin_url' => '#',
-                'instagram_url' => '#',
-                'is_featured' => $featured,
-                'sort_order' => $order + 1,
-            ]);
+            Speaker::firstOrCreate(
+                ['slug' => Str::slug($name)],
+                [
+                    'name' => $name,
+                    'title' => $title,
+                    'expertise' => $expertise,
+                    'photo' => $photo ? "images/speakers/{$photo}.jpg" : null,
+                    'linkedin_url' => '#',
+                    'instagram_url' => '#',
+                    'is_featured' => $featured,
+                    'sort_order' => $order + 1,
+                ]
+            );
         }
     }
 }

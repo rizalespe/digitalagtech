@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@digitalagtech.id'],
             [
                 'name'     => 'Admin Digital Agtech',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('d1g1ag2026'),
                 'role'     => UserRole::Admin,
             ]
         );
