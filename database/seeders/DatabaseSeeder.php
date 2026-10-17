@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,11 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::factory()->create([
-            'name' => 'Admin Digital Agtech',
-            'email' => 'admin@digitalagtech.id',
-        ]);
-        $admin->forceFill(['role' => UserRole::Admin])->save();
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@digitalagtech.id'],
+            [
+                'name'     => 'Admin Digital Agtech',
+                'password' => Hash::make('password'),
+                'role'     => UserRole::Admin,
+            ]
+        );
 
         $this->call([
             SpeakerSeeder::class,
