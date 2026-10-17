@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialiteController;
@@ -21,6 +22,10 @@ Route::get('/events/{event}', [EventController::class, 'show'])->name('events.sh
 Route::middleware('auth')->group(function () {
     Route::post('/events/{event}/registration', [EventRegistrationController::class, 'store'])->name('events.registration.store');
     Route::delete('/events/{event}/registration', [EventRegistrationController::class, 'destroy'])->name('events.registration.destroy');
+
+    Route::get('/assessment', [AssessmentController::class, 'index'])->name('assessment.index');
+    Route::post('/assessment', [AssessmentController::class, 'store'])->name('assessment.store');
+    Route::get('/assessment/{attempt}/result', [AssessmentController::class, 'result'])->name('assessment.result');
 });
 
 Route::get('/speakers', [SpeakerController::class, 'index'])->name('speakers.index');

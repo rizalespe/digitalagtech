@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['user_id', 'total_score', 'stage', 'dimension_scores', 'completed_at'])]
+#[Fillable(['user_id', 'startup_name', 'founder_name', 'sector', 'total_score', 'stage', 'dimension_scores', 'completed_at'])]
 class AssessmentAttempt extends Model
 {
     protected function casts(): array

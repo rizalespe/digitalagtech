@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['assessment_question_id', 'label', 'score', 'sort_order'])]
+#[Fillable(['assessment_question_id', 'label', 'text', 'score', 'sort_order'])]
 class AssessmentOption extends Model
 {
     public function question(): BelongsTo

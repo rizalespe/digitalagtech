@@ -21,7 +21,7 @@
             'label' => 'Learning',
             'active' => false,
             'items' => [
-                ['label' => 'Diagnose Test', 'href' => route('programs.self-learning').'#assessment'],
+                ['label' => 'Diagnose Test', 'href' => route('assessment.index')],
                 ['label' => 'Courses', 'href' => route('programs.self-learning').'#toolkit'],
             ],
         ],
