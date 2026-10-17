@@ -50,6 +50,11 @@ class ImageField
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
             return $path;
         }
-        return asset($path);
+        // Legacy static paths live in public/images/ and are served via asset().
+        // New uploads from the storage disk start with the directory name (e.g. "news/…").
+        if (str_starts_with($path, 'images/')) {
+            return asset($path);
+        }
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
     }
 }
