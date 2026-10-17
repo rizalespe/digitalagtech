@@ -34,7 +34,7 @@ class PartnerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                    ->getStateUsing(fn ($record) => $record->logo ? asset($record->logo) : null)
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->logo))
                     ->height(32),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('website_url')->limit(40),

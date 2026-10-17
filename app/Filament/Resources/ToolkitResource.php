@@ -59,7 +59,7 @@ class ToolkitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('cover')
-                    ->getStateUsing(fn ($record) => $record->cover ? asset($record->cover) : null),
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->cover)),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(50),
                 Tables\Columns\BadgeColumn::make('stage')
                     ->colors(['warning' => 'discover', 'primary' => 'build', 'success' => 'scale']),

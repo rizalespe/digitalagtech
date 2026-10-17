@@ -45,6 +45,14 @@ class ImageField
         ];
     }
 
+    public static function resolveUrl(?string $path): ?string
+    {
+        if (! $path) {
+            return null;
+        }
+        return self::url($path);
+    }
+
     private static function url(string $path): string
     {
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {

@@ -39,7 +39,7 @@ class GalleryPhotoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->getStateUsing(fn ($record) => $record->image ? asset($record->image) : null),
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->image)),
                 Tables\Columns\TextColumn::make('caption')->searchable()->limit(40),
                 Tables\Columns\TextColumn::make('event.title')->limit(30),
                 Tables\Columns\TextColumn::make('sort_order')->numeric()->sortable(),

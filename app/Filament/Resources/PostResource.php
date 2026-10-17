@@ -62,7 +62,7 @@ class PostResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail')
-                    ->getStateUsing(fn ($record) => $record->thumbnail ? asset($record->thumbnail) : null)
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->thumbnail))
                     ->extraImgAttributes(['style' => 'object-fit:cover']),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(50),
                 Tables\Columns\TextColumn::make('author_name')->searchable(),

@@ -75,7 +75,7 @@ class SpeakerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
-                    ->getStateUsing(fn ($record) => $record->photo ? asset($record->photo) : null)
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->photo))
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('title')->searchable()->limit(40),

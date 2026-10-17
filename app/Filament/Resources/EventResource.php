@@ -86,7 +86,7 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail')
-                    ->getStateUsing(fn ($record) => $record->thumbnail ? asset($record->thumbnail) : null),
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->thumbnail)),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(40),
                 Tables\Columns\BadgeColumn::make('type')
                     ->colors(['primary' => 'webinar', 'success' => 'workshop']),
