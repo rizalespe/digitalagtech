@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Learning Program — Digital Agtech Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --green-900: #081501;
+  --green-800: #1a4602;
+  --green-700: #587b18;
+  --green-600: #6a9620;
+  --green-500: #7db02a;
+  --green-400: #96c935;
+  --green-100: #deedb0;
+  --green-50:  #f0f7e0;
+  --lime:      #c9d829;
+  --lime-dark: #1a4602;
+  --fg:        #1a1f1a;
+  --fg-muted:  #4a5a4a;
+  --fg-subtle: #7a8a7a;
+  --bg:        #ffffff;
+  --bg-soft:   #f7faf7;
+  --bg-card:   #ffffff;
+  --border:    #ddeadd;
+  --shadow-sm: 0 1px 3px rgba(30,60,30,.08);
+  --shadow-md: 0 4px 16px rgba(30,60,30,.12);
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --content:   1440px;
+  --pad-x:     clamp(16px, 11.1vw, 160px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  max-width: var(--content);
+  margin-inline: auto;
+  font-family: var(--font-body);
+  font-size: 18px;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+.wrap { max-width: var(--content); padding-inline: var(--pad-x); }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 72px;
+}
+.nav-logo img { height: 48px; width: auto; }
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  margin-left: 8px;
+  flex: 1;
+}
+.nav-links a {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-muted);
+  transition: color .15s, background .15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--green-700); background: var(--green-50); }
+.nav-actions { display: flex; gap: 8px; margin-left: auto; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  border: none;
+}
+.btn-sm { padding: 8px 20px; font-size: 14px; }
+.btn-outline { border: 1.5px solid var(--green-700); color: var(--green-700); background: transparent; }
+.btn-outline:hover { background: var(--green-50); }
+.btn-primary { background: var(--green-700); color: #fff; }
+.btn-primary:hover { background: var(--green-800); }
+
+/* dropdown */
+.nav-item { position: relative; }
+.nav-links .nav-parent { cursor: default; user-select: none; }
+.nav-links .nav-parent:hover { color: var(--fg-muted); background: none; }
+.nav-links .nav-item:hover .nav-parent { color: var(--green-700); background: var(--green-50); }
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--lime);
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 220px;
+  list-style: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  z-index: 200;
+}
+.nav-item:hover .dropdown,
+.nav-item:focus-within .dropdown { display: block; }
+.dropdown a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lime-dark);
+  border-radius: 8px;
+}
+.dropdown a:hover { background: rgba(0,0,0,.06); }
+.dropdown li { list-style: none; }
+.dropdown li + li { border-top: 1px solid rgba(0,0,0,.08); }
+
+/* nav toggle */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.mobile-nav { display: none; flex-direction: column; gap: 4px; padding: 16px var(--pad-x); border-top: 1px solid var(--border); background: #fff; }
+.mobile-nav a { padding: 10px 0; font-size: 16px; font-weight: 500; border-bottom: 1px solid var(--border); }
+.mobile-nav-actions { display: flex; gap: 8px; padding-top: 8px; }
+.mobile-nav.open { display: flex; }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--green-700);
+  padding: 48px var(--pad-x) 56px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 24px;
+}
+.breadcrumb a { color: rgba(255,255,255,.6); }
+.breadcrumb a:hover { color: #fff; }
+.breadcrumb span { color: rgba(255,255,255,.9); font-weight: 600; }
+.page-hero-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+}
+
+/* ── PROGRAM TABS ── */
+.program-tabs {
+  display: flex;
+  gap: 10px;
+  padding: 20px var(--pad-x) 0;
+}
+.program-tab {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-subtle);
+  border: 1px solid #d6dcc8;
+  background: #fff;
+  transition: all .15s;
+}
+.program-tab:hover { color: var(--green-700); border-color: var(--green-700); }
+.program-tab.active { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+
+.eyebrow-sm {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--green-700);
+  margin-bottom: 10px;
+}
+
+/* ── INTRO ── */
+.slp-intro { padding: 56px var(--pad-x) 80px; }
+.slp-intro h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  color: var(--green-900);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.slp-intro p { color: var(--fg); max-width: 1120px; margin-bottom: 32px; }
+.slp-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.slp-photos img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* ── ASSESSMENT ── */
+.assessment {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 24px var(--pad-x) 112px;
+}
+.pill-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 50px;
+  background: #eef2e2;
+  border: 1px solid #dde5c8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--green-800);
+  margin-bottom: 20px;
+}
+.pill-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-700);
+}
+.assessment h2 {
+  font-size: clamp(36px, 4.4vw, 60px);
+  font-weight: 800;
+  line-height: 1.08;
+  color: var(--green-800);
+  letter-spacing: -.02em;
+  margin-bottom: 22px;
+}
+.assessment h2 span { color: var(--green-700); }
+.assessment p { color: var(--fg-muted); max-width: 520px; margin-bottom: 32px; }
+.assessment-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.btn-assess {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: 10px;
+  background: var(--green-700);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  transition: background .15s;
+}
+.btn-assess:hover { background: var(--green-800); }
+.btn-assess svg { width: 16px; height: 16px; }
+.duration { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--fg-subtle); }
+.duration svg { width: 14px; height: 14px; }
+
+.assess-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 28px;
+  background: radial-gradient(circle at 50% 50%, #eef3e0 0%, #f6f8ef 60%, #fafbf6 100%);
+  border: 1px solid #e3e8d4;
+  box-shadow: 0 20px 50px rgba(88,123,24,.12);
+}
+.assess-head { display: flex; justify-content: space-between; align-items: center; }
+.assess-head strong { font-size: 13px; color: var(--green-900); }
+.live-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: #e6edd2;
+  color: var(--green-800);
+}
+.radar { display: block; width: 100%; height: auto; margin-top: 8px; }
+.radar text { font-family: var(--font-body); font-size: 12px; font-weight: 600; fill: var(--green-900); }
+.radar .chip-text { font-size: 10px; font-weight: 500; fill: var(--fg-muted); }
+.radar .chip-value { font-size: 14px; font-weight: 800; fill: var(--green-900); }
+
+/* ── TOOLKIT ── */
+.toolkit {
+  background: #f1f2ea;
+  padding: 88px var(--pad-x) 104px;
+  text-align: center;
+}
+.toolkit h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  color: var(--green-900);
+  margin-bottom: 12px;
+}
+.toolkit-sub { max-width: 560px; margin: 0 auto 28px; color: var(--fg); }
+.toolkit-filter {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 50px;
+  background: #fff;
+  margin-bottom: 40px;
+}
+.toolkit-filter button {
+  padding: 6px 18px;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+.toolkit-filter button.active { background: var(--green-700); color: #fff; }
+
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: left;
+}
+.toolkit-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(40,50,20,.06);
+}
+.toolkit-card[hidden] { display: none; }
+.toolkit-thumb { position: relative; aspect-ratio: 16 / 9; }
+.toolkit-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.play-btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  transition: transform .15s;
+}
+.play-btn:hover { transform: scale(1.08); }
+.play-btn svg { width: 20px; height: 20px; margin-left: 3px; color: var(--green-900); }
+.toolkit-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 24px; }
+.stage-tag {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: 50px;
+  border: 1px solid #d6dfbd;
+  background: #f4f7ea;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--green-700);
+  margin-bottom: 12px;
+}
+.toolkit-body h3 { font-size: 17px; font-weight: 700; color: var(--green-900); margin-bottom: 8px; }
+.toolkit-body p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  padding-bottom: 20px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eceee6;
+  flex: 1;
+}
+.toolkit-meta { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+.toolkit-meta li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-muted); }
+.toolkit-meta svg { width: 14px; height: 14px; color: var(--green-700); flex-shrink: 0; }
+.btn-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border-radius: 8px;
+  border: 1.5px solid var(--green-700);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-900);
+  transition: background .15s;
+}
+.btn-download:hover { background: #f1f5e4; }
+.btn-download svg { width: 14px; height: 14px; }
+
+.page-spacer { height: 88px; }
+
+@media (max-width: 1024px) {
+  .assessment { grid-template-columns: 1fr; gap: 48px; }
+  .toolkit-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .slp-photos { grid-template-columns: 1fr; }
+  .toolkit-grid { grid-template-columns: 1fr; }
+  .program-tabs { flex-wrap: wrap; }
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--green-700);
+  color: rgba(255,255,255,.7);
+  padding: 64px var(--pad-x) 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.footer-logo { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.footer-body { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.5); margin-bottom: 20px; }
+.footer-socials { display: flex; gap: 10px; }
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--lime);
+  transition: background .15s;
+}
+.footer-social-btn:hover { background: #d8e63a; }
+.footer-social-btn svg { width: 16px; height: 16px; color: var(--green-700); }
+.footer-col h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; letter-spacing: .04em; text-transform: uppercase; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 14px; color: rgba(255,255,255,.5); transition: color .15s; }
+.footer-links a:hover { color: #fff; }
+.footer-newsletter { display: flex; gap: 8px; margin-bottom: 20px; }
+.footer-input { flex: 1; padding: 10px 14px; border-radius: 8px; border: none; background: #fff; color: var(--fg); font-size: 14px; font-family: var(--font-body); outline: none; }
+.footer-input::placeholder { color: var(--fg-subtle); }
+.footer-go-btn { padding: 10px 18px; border-radius: 8px; background: var(--lime); border: none; color: var(--green-800); font-weight: 700; font-size: 14px; cursor: pointer; font-family: var(--font-body); transition: background .15s; }
+.footer-go-btn:hover { background: var(--green-400); }
+.footer-contact { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.8; }
+.footer-contact strong { color: rgba(255,255,255,.7); display: block; margin-bottom: 4px; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; gap: 16px; flex-wrap: wrap; }
+.footer-bottom p { font-size: 13px; color: rgba(255,255,255,.35); }
+.footer-bottom-links { display: flex; gap: 20px; list-style: none; }
+.footer-bottom-links a { font-size: 13px; color: rgba(255,255,255,.35); }
+.footer-bottom-links a:hover { color: rgba(255,255,255,.7); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .speakers-grid-full { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .speakers-grid-full { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .nav-links, .nav-actions { display: none; }
+  .nav-toggle { display: block; margin-left: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="wrap nav-inner">
+    <a href="landing.html" class="nav-logo">
+      <img src="assets/img/logo.png" alt="Digital Agtech Indonesia" width="114" height="72">
+    </a>
+    <ul class="nav-links">
+      <li><a href="landing.html">Home</a></li>
+      <li><a href="landing.html#about">About</a></li>
+      <li><a href="landing.html#events">Events</a></li>
+      <li><a href="landing.html#gallery">Gallery</a></li>
+      <li><a href="landing.html#news">News</a></li>
+      <li class="nav-item">
+        <a href="#" class="nav-parent active" onclick="return false">Program</a>
+        <ul class="dropdown">
+          <li><a href="program-slp.html">Self-Learning Program</a></li>
+          <li><a href="program-bi.html">Business Incubation</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-parent" onclick="return false">Learning</a>
+        <ul class="dropdown">
+          <li><a href="#">Diagnose Test</a></li>
+          <li><a href="#">Courses</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/>
+        <line x1="3" y1="11" x2="19" y2="11"/>
+        <line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="landing.html">Home</a>
+    <a href="landing.html#about">About</a>
+    <a href="landing.html#events">Events</a>
+    <a href="landing.html#gallery">Gallery</a>
+    <a href="landing.html#news">News</a>
+    <a href="program-slp.html">Program</a>
+    <a href="#">Learning</a>
+    <div class="mobile-nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Login</a>
+      <a href="register.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Register</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="breadcrumb">
+    <a href="landing.html">Home</a>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 2 8 6 4 10"/></svg>
+    <a href="#">Program</a>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 2 8 6 4 10"/></svg>
+    <span>Self-Learning Program</span>
+  </div>
+  <h1 class="page-hero-title">Self-Learning Program</h1>
+</section>
+
+<div class="program-tabs">
+  <a href="program-slp.html" class="program-tab active" aria-current="page">Self-Learning Program</a>
+  <a href="program-bi.html" class="program-tab">Business Incubation</a>
+</div>
+
+<!-- INTRO -->
+<section class="slp-intro">
+  <p class="eyebrow-sm">Program</p>
+  <h2>Self-Learning Program</h2>
+  <p>The Self-Learning Program is designed for aspiring AgTech entrepreneurs who want to develop and validate their ideas through structured self-paced toolkits. Each module walks you through a critical stage of the startup journey — from discovering real problems in agriculture to scaling a profitable venture.</p>
+  <div class="slp-photos">
+    <img src="assets/img/slp-photo-1.jpg" alt="Peserta menempel sticky notes di papan" loading="lazy">
+    <img src="assets/img/slp-photo-2.jpg" alt="Peserta bekerja dengan laptop" loading="lazy">
+    <img src="assets/img/slp-photo-3.jpg" alt="Peserta menulis catatan di meja" loading="lazy">
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<section class="assessment">
+  <div>
+    <span class="pill-label">Startup Assessment</span>
+    <h2>Where is Your<br><span>Startup Today?</span></h2>
+    <p>Take a short assessment to discover your current startup stage and get personalized learning recommendations tailored to where you are right now.</p>
+    <div class="assessment-cta">
+      <a href="#" class="btn-assess">
+        Take the Assessment
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg>
+      </a>
+      <span class="duration">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>
+        5–7 minutes
+      </span>
+    </div>
+  </div>
+
+  <div class="assess-card">
+    <div class="assess-head">
+      <strong>Assessment Preview</strong>
+      <span class="live-badge">Live Result</span>
+    </div>
+    <svg class="radar" viewBox="0 0 500 445" role="img" aria-label="Contoh hasil assessment: radar chart enam dimensi startup">
+      <g fill="none" stroke="#9fb46a" stroke-dasharray="4 4" stroke-width="1">
+        <polygon points="250,80 379.9,155 379.9,305 250,380 120.1,305 120.1,155"/>
+        <polygon points="250,155 315,192.5 315,267.5 250,305 185,267.5 185,192.5"/>
+        <line x1="250" y1="230" x2="250" y2="80"/>
+        <line x1="250" y1="230" x2="379.9" y2="155"/>
+        <line x1="250" y1="230" x2="379.9" y2="305"/>
+        <line x1="250" y1="230" x2="250" y2="380"/>
+        <line x1="250" y1="230" x2="120.1" y2="305"/>
+        <line x1="250" y1="230" x2="120.1" y2="155"/>
+      </g>
+      <polygon points="250,110 347.4,173.8 340.9,282.5 250,282.5 165.6,278.8 178.6,188.8" fill="#6a9620" fill-opacity=".38" stroke="#587b18" stroke-width="2"/>
+      <g fill="#3f5a10">
+        <circle cx="250" cy="110" r="4"/><circle cx="347.4" cy="173.8" r="4"/><circle cx="340.9" cy="282.5" r="4"/>
+        <circle cx="250" cy="282.5" r="4"/><circle cx="165.6" cy="278.8" r="4"/><circle cx="178.6" cy="188.8" r="4"/>
+        <circle cx="250" cy="230" r="3" fill="#96c935"/>
+      </g>
+      <text x="250" y="66" text-anchor="middle">Market Fit</text>
+      <text x="392" y="152">Scale</text>
+      <text x="392" y="312">Traction</text>
+      <text x="108" y="312" text-anchor="end">Product</text>
+      <text x="108" y="152" text-anchor="end">Team</text>
+      <rect x="196" y="390" width="108" height="26" rx="13" fill="#dfe8c6" stroke="#b9c98f"/>
+      <text x="250" y="407" text-anchor="middle" style="font-size:11px">Growth Stage</text>
+      <text x="250" y="436" text-anchor="middle">Funding</text>
+      <g>
+        <rect x="14" y="36" width="96" height="42" rx="8" fill="#fff" stroke="#e1e6d4"/>
+        <text x="26" y="53" class="chip-text">Stage</text>
+        <text x="26" y="69" style="font-size:12px;font-weight:700">Series A</text>
+      </g>
+      <g>
+        <rect x="396" y="36" width="90" height="42" rx="8" fill="#fff" stroke="#e1e6d4"/>
+        <text x="408" y="53" class="chip-text">Score</text>
+        <text x="408" y="71" class="chip-value">73%</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- TOOLKIT -->
+<section class="toolkit">
+  <p class="eyebrow-sm">Toolkit</p>
+  <h2>Your Startup Journey, Step by Step</h2>
+  <p class="toolkit-sub">Each toolkit is an interactive assessment that helps you make progress through a critical milestone in building your AgTech venture.</p>
+  <div class="toolkit-filter" role="tablist">
+    <button class="active" data-stage="all">All</button>
+    <button data-stage="discover">Discover</button>
+    <button data-stage="build">Build</button>
+    <button data-stage="scale">Scale</button>
+  </div>
+
+  <div class="toolkit-grid">
+    <article class="toolkit-card" data-stage="discover">
+      <div class="toolkit-thumb">
+        <img src="assets/img/toolkit-ideation.jpg" alt="Cover toolkit Ideation &amp; Problem Discovery" loading="lazy">
+        <a href="#" class="play-btn" aria-label="Putar video Ideation &amp; Problem Discovery"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13l11-6.5z"/></svg></a>
+      </div>
+      <div class="toolkit-body">
+        <span class="stage-tag">Discover</span>
+        <h3>Ideation &amp; Problem Discovery</h3>
+        <p>Uncover real agricultural pain points and generate validated ideas through structured discovery frameworks and field research techniques.</p>
+        <ul class="toolkit-meta">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.5 2.5a3 3 0 00-3.6 3.9L2.5 10.8v2.7h2.7l4.4-4.4a3 3 0 003.9-3.6l-1.9 1.9-1.9-.5-.5-1.9z"/></svg>6 Tools</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8 4.5 8 6.5 3 9.5 13 11.5 8 14.5 8"/></svg>8 Activities</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>2–3 Hours</li>
+        </ul>
+        <a href="#" class="btn-download">Download PDF <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+      </div>
+    </article>
+    <article class="toolkit-card" data-stage="discover">
+      <div class="toolkit-thumb">
+        <img src="assets/img/toolkit-validation.jpg" alt="Cover toolkit Validation &amp; Problem–Solution Fit" loading="lazy">
+        <a href="#" class="play-btn" aria-label="Putar video Validation &amp; Problem–Solution Fit"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13l11-6.5z"/></svg></a>
+      </div>
+      <div class="toolkit-body">
+        <span class="stage-tag">Discover</span>
+        <h3>Validation &amp; Problem–Solution Fit</h3>
+        <p>Test your assumptions fast with lightweight experiments. Learn to validate your solution concept before committing to a build.</p>
+        <ul class="toolkit-meta">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.5 2.5a3 3 0 00-3.6 3.9L2.5 10.8v2.7h2.7l4.4-4.4a3 3 0 003.9-3.6l-1.9 1.9-1.9-.5-.5-1.9z"/></svg>5 Tools</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8 4.5 8 6.5 3 9.5 13 11.5 8 14.5 8"/></svg>7 Activities</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>3–4 Hours</li>
+        </ul>
+        <a href="#" class="btn-download">Download PDF <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+      </div>
+    </article>
+    <article class="toolkit-card" data-stage="build">
+      <div class="toolkit-thumb">
+        <img src="assets/img/toolkit-pmf.jpg" alt="Cover toolkit Product–Market Fit" loading="lazy">
+        <a href="#" class="play-btn" aria-label="Putar video Product–Market Fit"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13l11-6.5z"/></svg></a>
+      </div>
+      <div class="toolkit-body">
+        <span class="stage-tag">Build</span>
+        <h3>Product–Market Fit</h3>
+        <p>Align your AgTech product with real market demand. Use metrics, user feedback loops, and iteration cycles to find the sweet spot.</p>
+        <ul class="toolkit-meta">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.5 2.5a3 3 0 00-3.6 3.9L2.5 10.8v2.7h2.7l4.4-4.4a3 3 0 003.9-3.6l-1.9 1.9-1.9-.5-.5-1.9z"/></svg>7 Tools</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8 4.5 8 6.5 3 9.5 13 11.5 8 14.5 8"/></svg>9 Activities</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>4–5 Hours</li>
+        </ul>
+        <a href="#" class="btn-download">Download PDF <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+      </div>
+    </article>
+    <article class="toolkit-card" data-stage="scale">
+      <div class="toolkit-thumb">
+        <img src="assets/img/toolkit-scaling.jpg" alt="Cover toolkit Scaling &amp; Growth" loading="lazy">
+        <a href="#" class="play-btn" aria-label="Putar video Scaling &amp; Growth"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13l11-6.5z"/></svg></a>
+      </div>
+      <div class="toolkit-body">
+        <span class="stage-tag">Scale</span>
+        <h3>Scaling &amp; Growth</h3>
+        <p>Design your go-to-market strategy and growth engine. Build channels, partnerships, and distribution networks across the agri-sector.</p>
+        <ul class="toolkit-meta">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.5 2.5a3 3 0 00-3.6 3.9L2.5 10.8v2.7h2.7l4.4-4.4a3 3 0 003.9-3.6l-1.9 1.9-1.9-.5-.5-1.9z"/></svg>6 Tools</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8 4.5 8 6.5 3 9.5 13 11.5 8 14.5 8"/></svg>8 Activities</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>3–4 Hours</li>
+        </ul>
+        <a href="#" class="btn-download">Download PDF <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+      </div>
+    </article>
+    <article class="toolkit-card" data-stage="scale">
+      <div class="toolkit-thumb">
+        <img src="assets/img/toolkit-maturity.jpg" alt="Cover toolkit Maturity &amp; Expansion" loading="lazy">
+        <a href="#" class="play-btn" aria-label="Putar video Maturity &amp; Expansion"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13l11-6.5z"/></svg></a>
+      </div>
+      <div class="toolkit-body">
+        <span class="stage-tag">Scale</span>
+        <h3>Maturity &amp; Expansion</h3>
+        <p>Sustain momentum and expand into new markets. Explore strategic pivots, regional scaling, and long-term resilience for AgTech ventures.</p>
+        <ul class="toolkit-meta">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.5 2.5a3 3 0 00-3.6 3.9L2.5 10.8v2.7h2.7l4.4-4.4a3 3 0 003.9-3.6l-1.9 1.9-1.9-.5-.5-1.9z"/></svg>5 Tools</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8 4.5 8 6.5 3 9.5 13 11.5 8 14.5 8"/></svg>6 Activities</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>2–3 Hours</li>
+        </ul>
+        <a href="#" class="btn-download">Download PDF <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="page-spacer"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Agtech</div>
+        <p class="footer-body">Southeast Asia's leading platform for agritech founders, innovators, and young agricultural entrepreneurs.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.23H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3 1.9-1.2 2.7c-1.1 1.2-2.4 1.2-3 1.3-.4 0-2.6.2-5.8-2.1C10.3 6.8 8 4 8 4s3.2 2.5 5.6 3.6c-1.4-1.6-3-3.6-3-3.6s2 1.4 4.5 2.7C15.6 4.5 14.2 3 14.2 3s5.1 2.2 5.8 6.2c.4-.4.6-1 .6-1.7L23 7z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Events</h4>
+        <ul class="footer-links">
+          <li><a href="#">AgriStartup Summit 2026</a></li>
+          <li><a href="#">From Farm to Startup</a></li>
+          <li><a href="#">Funding Your Agritech Idea</a></li>
+          <li><a href="#">View All Events</a></li>
+          <li><a href="#">Past Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul class="footer-links">
+          <li><a href="speakers.html">Speakers</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;line-height:1.6;">Get early access to events, speaker announcements, and agritech insights.</p>
+        <div class="footer-newsletter">
+          <input type="email" class="footer-input" placeholder="Your email">
+          <button class="footer-go-btn">Go</button>
+        </div>
+        <div class="footer-contact">
+          <strong>Contact</strong>
+          agtech@gmail.com<br>
+          Malang, Indonesia
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 powered by Jagoan Indonesia. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+document.querySelectorAll('.toolkit-filter button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toolkit-filter button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const stage = btn.dataset.stage;
+    document.querySelectorAll('.toolkit-card').forEach(card => {
+      card.hidden = stage !== 'all' && card.dataset.stage !== stage;
+    });
+  });
+});
+</script>
+</body>
+</html>
