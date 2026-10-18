@@ -11,6 +11,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class ToolkitResource extends Resource
@@ -44,13 +46,52 @@ class ToolkitResource extends Resource
                     )),
 
                 Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
+                Forms\Components\TextInput::make('tools_count')->numeric()->default(0)->label('Tools Count'),
+                Forms\Components\TextInput::make('activities_count')->numeric()->default(0)->label('Activities Count'),
+                Forms\Components\TextInput::make('duration_label')->maxLength(50)->placeholder('e.g. 2–3 Hours'),
+                Forms\Components\Toggle::make('is_active')->default(true)->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')->rows(3)->columnSpanFull(),
             ])->columns(2),
 
-            Forms\Components\Section::make('Cover')->schema(
-                ImageField::make('cover', 'Cover', 'toolkits')
+            Forms\Components\Section::make('Thumbnail')->schema(
+                ImageField::make('thumbnail', 'Thumbnail', 'toolkits')
             ),
+
+            Forms\Components\Section::make('Video')->schema([
+                Forms\Components\TextInput::make('video_url')
+                    ->label('Video URL')
+                    ->helperText('Paste a YouTube or Vimeo URL. Leave empty if no video.')
+                    ->url()
+                    ->maxLength(500)
+                    ->placeholder('https://www.youtube.com/watch?v=...')
+                    ->columnSpanFull(),
+            ]),
+
+            Forms\Components\Section::make('PDF Download')->schema([
+                Forms\Components\Placeholder::make('pdf_current')
+                    ->label('Current PDF')
+                    ->content(fn ($record) => $record?->pdf_path
+                        ? new HtmlString(
+                            '<a href="'.Storage::disk('public')->url($record->pdf_path).'" target="_blank" rel="noopener" '
+                            .'style="color:#4f46e5;text-decoration:underline">'.basename($record->pdf_path).'</a>'
+                        )
+                        : new HtmlString('<span style="color:#888">No PDF uploaded yet</span>'))
+                    ->visibleOn('edit')
+                    ->columnSpanFull(),
+
+                Forms\Components\FileUpload::make('pdf_path')
+                    ->label('Upload PDF')
+                    ->helperText('Leave empty to keep the current file. Accepted: .pdf')
+                    ->disk('public')
+                    ->directory('toolkits/pdf')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->maxSize(20480)
+                    ->columnSpanFull()
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->afterStateHydrated(fn (Forms\Components\FileUpload $component) =>
+                        $component->state(null)),
+            ]),
         ]);
     }
 
@@ -58,8 +99,8 @@ class ToolkitResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('cover')
-                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->cover)),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->getStateUsing(fn ($record) => \App\Filament\Support\ImageField::resolveUrl($record->thumbnail)),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable()->limit(50),
                 Tables\Columns\BadgeColumn::make('stage')
                     ->colors(['warning' => 'discover', 'primary' => 'build', 'success' => 'scale']),
