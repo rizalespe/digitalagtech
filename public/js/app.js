@@ -92,6 +92,53 @@ document.querySelectorAll('a[href^="#"]:not(.nav-parent)').forEach(a => {
   });
 });
 
+// ── Video modal ──
+(function () {
+  const modal   = document.getElementById('videoModal');
+  const frame   = document.getElementById('videoFrame');
+  if (!modal || !frame) return;
+
+  function toEmbedUrl(url) {
+    try {
+      const u = new URL(url);
+      // youtube.com/watch?v=ID  or  youtu.be/ID
+      if (u.hostname.includes('youtube.com')) {
+        const id = u.searchParams.get('v');
+        return id ? `https://www.youtube.com/embed/${id}?autoplay=1` : url;
+      }
+      if (u.hostname === 'youtu.be') {
+        return `https://www.youtube.com/embed${u.pathname}?autoplay=1`;
+      }
+      // vimeo.com/ID
+      if (u.hostname.includes('vimeo.com')) {
+        return `https://player.vimeo.com/video${u.pathname}?autoplay=1`;
+      }
+    } catch (_) {}
+    return url;
+  }
+
+  function openModal(videoUrl) {
+    frame.src = toEmbedUrl(videoUrl);
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.video-modal-close').focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    frame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.play-btn[data-video]').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.video));
+  });
+
+  modal.querySelector('.video-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('.video-modal-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+})();
+
 // ── Password visibility (auth pages) ──
 function toggleEye(inputId, btn) {
   const input = document.getElementById(inputId);

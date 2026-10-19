@@ -69,7 +69,7 @@
                             <img src="{{ $toolkit->thumbnail_url }}" alt="Cover toolkit {{ $toolkit->title }}" loading="lazy">
                         @endif
                         @if ($toolkit->video_url)
-                            <a href="{{ $toolkit->video_url }}" class="play-btn" target="_blank" rel="noopener" aria-label="Putar video {{ $toolkit->title }}"><x-icon name="play" /></a>
+                            <button type="button" class="play-btn" data-video="{{ $toolkit->video_url }}" aria-label="Putar video {{ $toolkit->title }}"><x-icon name="play" /></button>
                         @endif
                     </div>
                     <div class="toolkit-body">
@@ -97,4 +97,15 @@
     </section>
 
     <div class="page-spacer"></div>
+
+    {{-- Video modal --}}
+    <div id="videoModal" class="video-modal" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+        <div class="video-modal-backdrop"></div>
+        <div class="video-modal-box">
+            <button type="button" class="video-modal-close" aria-label="Tutup video">&times;</button>
+            <div class="video-modal-ratio">
+                <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+            </div>
+        </div>
+    </div>
 @endsection
