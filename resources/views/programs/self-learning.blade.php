@@ -106,6 +106,9 @@
             <div class="video-modal-ratio">
                 <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
             </div>
+            <a id="videoExternalLink" href="#" target="_blank" rel="noopener" class="video-modal-external">
+                Watch on YouTube ↗
+            </a>
         </div>
     </div>
 @endsection

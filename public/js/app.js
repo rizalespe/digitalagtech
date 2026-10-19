@@ -94,8 +94,9 @@ document.querySelectorAll('a[href^="#"]:not(.nav-parent)').forEach(a => {
 
 // ── Video modal ──
 (function () {
-  const modal   = document.getElementById('videoModal');
-  const frame   = document.getElementById('videoFrame');
+  const modal    = document.getElementById('videoModal');
+  const frame    = document.getElementById('videoFrame');
+  const extLink  = document.getElementById('videoExternalLink');
   if (!modal || !frame) return;
 
   function toEmbedUrl(url) {
@@ -119,6 +120,7 @@ document.querySelectorAll('a[href^="#"]:not(.nav-parent)').forEach(a => {
 
   function openModal(videoUrl) {
     frame.src = toEmbedUrl(videoUrl);
+    if (extLink) extLink.href = videoUrl;
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     modal.querySelector('.video-modal-close').focus();
