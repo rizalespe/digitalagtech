@@ -104,7 +104,7 @@
         <div class="video-modal-box">
             <button type="button" class="video-modal-close" aria-label="Tutup video">&times;</button>
             <div class="video-modal-ratio">
-                <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                <iframe id="videoFrame" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <a id="videoExternalLink" href="#" target="_blank" rel="noopener" class="video-modal-external">
                 Watch on YouTube ↗

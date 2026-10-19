@@ -102,13 +102,22 @@ document.querySelectorAll('a[href^="#"]:not(.nav-parent)').forEach(a => {
   function toEmbedUrl(url) {
     try {
       const u = new URL(url);
+      const origin = encodeURIComponent(window.location.origin);
       // youtube.com/watch?v=ID  or  youtu.be/ID
       if (u.hostname.includes('youtube.com')) {
+        // Already an embed URL (e.g. copied from YouTube share → embed)
+        if (u.pathname.startsWith('/embed/')) {
+          const embedUrl = new URL(url);
+          embedUrl.searchParams.set('autoplay', '1');
+          embedUrl.searchParams.set('origin', window.location.origin);
+          return embedUrl.toString();
+        }
         const id = u.searchParams.get('v');
-        return id ? `https://www.youtube.com/embed/${id}?autoplay=1` : url;
+        return id ? `https://www.youtube.com/embed/${id}?autoplay=1&origin=${origin}` : url;
       }
       if (u.hostname === 'youtu.be') {
-        return `https://www.youtube.com/embed${u.pathname}?autoplay=1`;
+        const id = u.pathname.slice(1);
+        return `https://www.youtube.com/embed/${id}?autoplay=1&origin=${origin}`;
       }
       // vimeo.com/ID
       if (u.hostname.includes('vimeo.com')) {
