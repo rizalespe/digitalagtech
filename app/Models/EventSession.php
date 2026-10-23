@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
-#[Fillable(['event_id', 'starts_at', 'ends_at', 'title', 'sort_order'])]
+#[Fillable(['event_id', 'starts_at', 'ends_at', 'title', 'title_en', 'sort_order'])]
 class EventSession extends Model
 {
+    use HasTranslations;
+
+    protected array $translatable = ['title'];
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

@@ -54,6 +54,22 @@ class ToolkitResource extends Resource
                 Forms\Components\Textarea::make('description')->rows(3)->columnSpanFull(),
             ])->columns(2),
 
+            Forms\Components\Section::make('English Translation')->schema([
+                Forms\Components\TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('duration_label_en')
+                    ->label('Duration Label (EN)')
+                    ->maxLength(50)
+                    ->placeholder('e.g. 2–3 Hours'),
+
+                Forms\Components\Textarea::make('description_en')
+                    ->label('Description (EN)')
+                    ->rows(3)
+                    ->columnSpanFull(),
+            ])->columns(2)->collapsed(),
+
             Forms\Components\Section::make('Thumbnail')->schema(
                 ImageField::make('thumbnail', 'Thumbnail', 'toolkits')
             ),

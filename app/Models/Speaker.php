@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use App\Models\Concerns\ResolvesMediaUrl;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -12,11 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
-#[Fillable(['name', 'slug', 'title', 'expertise', 'bio', 'photo', 'linkedin_url', 'instagram_url', 'is_featured', 'sort_order'])]
+#[Fillable(['name', 'slug', 'title', 'title_en', 'expertise', 'expertise_en', 'bio', 'bio_en', 'photo', 'linkedin_url', 'instagram_url', 'is_featured', 'sort_order'])]
 #[RouteKey('slug')]
 class Speaker extends Model
 {
-    use ResolvesMediaUrl;
+    use ResolvesMediaUrl, HasTranslations;
+
+    protected array $translatable = ['title', 'expertise', 'bio'];
 
     protected function casts(): array
     {

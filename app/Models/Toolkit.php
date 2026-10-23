@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ToolkitStage;
+use App\Models\Concerns\HasTranslations;
 use App\Models\Concerns\ResolvesMediaUrl;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -12,13 +13,15 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
-    'title', 'slug', 'stage', 'description', 'thumbnail', 'video_url', 'pdf_path',
-    'tools_count', 'activities_count', 'duration_label', 'sort_order', 'is_active',
+    'title', 'title_en', 'slug', 'stage', 'description', 'description_en', 'thumbnail', 'video_url', 'pdf_path',
+    'tools_count', 'activities_count', 'duration_label', 'duration_label_en', 'sort_order', 'is_active',
 ])]
 #[RouteKey('slug')]
 class Toolkit extends Model
 {
-    use ResolvesMediaUrl;
+    use ResolvesMediaUrl, HasTranslations;
+
+    protected array $translatable = ['title', 'description', 'duration_label'];
 
     protected function casts(): array
     {

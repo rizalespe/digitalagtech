@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EventType;
+use App\Models\Concerns\HasTranslations;
 use App\Models\Concerns\ResolvesMediaUrl;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -14,14 +15,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
-    'title', 'slug', 'type', 'summary', 'description', 'starts_at', 'ends_at',
-    'location', 'city', 'is_online', 'meeting_url', 'thumbnail', 'flyer',
+    'title', 'title_en', 'slug', 'type', 'summary', 'summary_en', 'description', 'description_en',
+    'starts_at', 'ends_at', 'location', 'city', 'is_online', 'meeting_url', 'thumbnail', 'flyer',
     'workshop_cities', 'quota', 'is_featured', 'registration_open', 'published_at',
 ])]
 #[RouteKey('slug')]
 class Event extends Model
 {
-    use ResolvesMediaUrl;
+    use ResolvesMediaUrl, HasTranslations;
+
+    protected array $translatable = ['title', 'summary', 'description'];
 
     protected function casts(): array
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use App\Models\Concerns\ResolvesMediaUrl;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -11,11 +12,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['user_id', 'title', 'slug', 'excerpt', 'body', 'thumbnail', 'author_name', 'published_at'])]
+#[Fillable(['user_id', 'title', 'title_en', 'slug', 'excerpt', 'excerpt_en', 'body', 'body_en', 'thumbnail', 'author_name', 'published_at'])]
 #[RouteKey('slug')]
 class Post extends Model
 {
-    use ResolvesMediaUrl;
+    use ResolvesMediaUrl, HasTranslations;
+
+    protected array $translatable = ['title', 'excerpt', 'body'];
 
     protected function casts(): array
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use App\Models\Concerns\ResolvesMediaUrl;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -11,11 +12,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'slug', 'description', 'cover_image', 'sort_order', 'is_active'])]
+#[Fillable(['name', 'name_en', 'slug', 'description', 'description_en', 'cover_image', 'sort_order', 'is_active'])]
 #[RouteKey('slug')]
 class IncubationProgram extends Model
 {
-    use ResolvesMediaUrl;
+    use ResolvesMediaUrl, HasTranslations;
+
+    protected array $translatable = ['name', 'description'];
 
     protected function casts(): array
     {

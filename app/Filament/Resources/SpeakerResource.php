@@ -64,6 +64,21 @@ class SpeakerResource extends Resource
                 ]),
             ])->columns(2),
 
+            Forms\Components\Section::make('English Translation')->schema([
+                Forms\Components\TextInput::make('title_en')
+                    ->label('Title / Role (EN)')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('expertise_en')
+                    ->label('Expertise (EN)')
+                    ->maxLength(255),
+
+                Forms\Components\Textarea::make('bio_en')
+                    ->label('Bio (EN)')
+                    ->rows(4)
+                    ->columnSpanFull(),
+            ])->columns(2)->collapsed(),
+
             Forms\Components\Section::make('Photo')->schema(
                 ImageField::make('photo', 'Photo', 'speakers')
             ),

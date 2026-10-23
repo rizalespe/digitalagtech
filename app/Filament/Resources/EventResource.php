@@ -68,6 +68,21 @@ class EventResource extends Resource
                 Forms\Components\DateTimePicker::make('published_at'),
             ])->columns(2),
 
+            Forms\Components\Section::make('English Translation')->schema([
+                Forms\Components\TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('summary_en')
+                    ->label('Summary (EN)')
+                    ->maxLength(500)
+                    ->columnSpanFull(),
+
+                Forms\Components\RichEditor::make('description_en')
+                    ->label('Description (EN)')
+                    ->columnSpanFull(),
+            ])->columns(2)->collapsed(),
+
             Forms\Components\Section::make('Media')->schema([
                 Forms\Components\Grid::make(2)->schema([
                     Forms\Components\Fieldset::make('Thumbnail')->schema(

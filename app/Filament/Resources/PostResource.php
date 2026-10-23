@@ -51,6 +51,21 @@ class PostResource extends Resource
                     ->columnSpanFull(),
             ])->columns(2),
 
+            Forms\Components\Section::make('English Translation')->schema([
+                Forms\Components\TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('excerpt_en')
+                    ->label('Excerpt (EN)')
+                    ->maxLength(500)
+                    ->columnSpanFull(),
+
+                Forms\Components\RichEditor::make('body_en')
+                    ->label('Body (EN)')
+                    ->columnSpanFull(),
+            ])->columns(2)->collapsed(),
+
             Forms\Components\Section::make('Thumbnail')->schema(
                 ImageField::make('thumbnail', 'Thumbnail', 'news')
             ),

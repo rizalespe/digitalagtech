@@ -41,6 +41,17 @@ class IncubationProgramResource extends Resource
 
                 Forms\Components\RichEditor::make('description')->columnSpanFull(),
             ])->columns(2),
+
+            Forms\Components\Section::make('English Translation')->schema([
+                Forms\Components\TextInput::make('name_en')
+                    ->label('Name (EN)')
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+
+                Forms\Components\RichEditor::make('description_en')
+                    ->label('Description (EN)')
+                    ->columnSpanFull(),
+            ])->collapsed(),
         ]);
     }
 
