@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    @include('partials.page-hero', ['title' => 'Meet Our Speakers', 'crumbs' => ['Our Speakers' => null]])
+    @include('partials.page-hero', ['title' => __('Meet Our Speakers'), 'crumbs' => [__('Our Speakers') => null]])
 
     <section class="page-section">
         @if ($speakers->isNotEmpty())
@@ -18,7 +18,7 @@
             </div>
             {{ $speakers->links() }}
         @else
-            <p class="empty-state">Speakers will be announced soon.</p>
+            <p class="empty-state">{{ __('Speakers will be announced soon.') }}</p>
         @endif
     </section>
 @endsection

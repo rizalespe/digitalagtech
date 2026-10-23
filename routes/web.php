@@ -54,3 +54,5 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+Route::get('/locale/{locale}', \App\Http\Controllers\LocaleController::class)->name('locale.switch');

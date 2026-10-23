@@ -2,27 +2,27 @@
     $onHome = request()->routeIs('home');
     $anchor = fn (string $id) => $onHome ? "#{$id}" : route('home')."#{$id}";
     $links = [
-        ['label' => 'Home', 'href' => $onHome ? '#top' : route('home'), 'active' => $onHome],
-        ['label' => 'About', 'href' => $anchor('about'), 'active' => false],
-        ['label' => 'Events', 'href' => $onHome ? '#events' : route('events.index'), 'active' => request()->routeIs('events.*')],
-        ['label' => 'Gallery', 'href' => $onHome ? '#gallery' : route('gallery.index'), 'active' => request()->routeIs('gallery.*')],
-        ['label' => 'News', 'href' => $onHome ? '#news' : route('news.index'), 'active' => request()->routeIs('news.*')],
+        ['label' => __('Home'), 'href' => $onHome ? '#top' : route('home'), 'active' => $onHome],
+        ['label' => __('About'), 'href' => $anchor('about'), 'active' => false],
+        ['label' => __('Events'), 'href' => $onHome ? '#events' : route('events.index'), 'active' => request()->routeIs('events.*')],
+        ['label' => __('Gallery'), 'href' => $onHome ? '#gallery' : route('gallery.index'), 'active' => request()->routeIs('gallery.*')],
+        ['label' => __('News'), 'href' => $onHome ? '#news' : route('news.index'), 'active' => request()->routeIs('news.*')],
     ];
     $menus = [
         [
-            'label' => 'Program',
+            'label' => __('Program'),
             'active' => request()->routeIs('programs.*'),
             'items' => [
-                ['label' => 'Self-Learning Program', 'href' => route('programs.self-learning')],
-                ['label' => 'Business Incubation', 'href' => route('programs.incubation')],
+                ['label' => __('Self-Learning Program'), 'href' => route('programs.self-learning')],
+                ['label' => __('Business Incubation'), 'href' => route('programs.incubation')],
             ],
         ],
         [
-            'label' => 'Learning',
+            'label' => __('Learning'),
             'active' => false,
             'items' => [
-                ['label' => 'Diagnose Test', 'href' => route('assessment.index')],
-                ['label' => 'Courses', 'href' => route('programs.self-learning').'#toolkit'],
+                ['label' => __('Diagnose Test'), 'href' => route('assessment.index')],
+                ['label' => __('Courses'), 'href' => route('programs.self-learning').'#toolkit'],
             ],
         ],
     ];
@@ -51,15 +51,22 @@
         </ul>
 
         <div class="nav-actions">
+            <div class="lang-switch">
+                @if (app()->getLocale() === 'id')
+                    <a href="{{ route('locale.switch', 'en') }}" class="lang-btn" title="{{ __('Switch to English') }}">EN</a>
+                @else
+                    <a href="{{ route('locale.switch', 'id') }}" class="lang-btn" title="{{ __('Switch to Indonesian') }}">ID</a>
+                @endif
+            </div>
             @auth
                 <span class="nav-user">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+                    <button type="submit" class="btn btn-outline btn-sm">{{ __('Logout') }}</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-outline btn-sm">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
+                <a href="{{ route('login') }}" class="btn btn-outline btn-sm">{{ __('Login') }}</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">{{ __('Register') }}</a>
             @endauth
         </div>
 
@@ -78,14 +85,21 @@
             @endforeach
         @endforeach
         <div class="mobile-nav-actions">
+            <div class="lang-switch">
+                @if (app()->getLocale() === 'id')
+                    <a href="{{ route('locale.switch', 'en') }}" class="lang-btn" title="{{ __('Switch to English') }}">EN</a>
+                @else
+                    <a href="{{ route('locale.switch', 'id') }}" class="lang-btn" title="{{ __('Switch to Indonesian') }}">ID</a>
+                @endif
+            </div>
             @auth
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+                    <button type="submit" class="btn btn-outline btn-sm">{{ __('Logout') }}</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-outline btn-sm">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
+                <a href="{{ route('login') }}" class="btn btn-outline btn-sm">{{ __('Login') }}</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">{{ __('Register') }}</a>
             @endauth
         </div>
     </div>

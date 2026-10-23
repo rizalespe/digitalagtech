@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $showPast ? 'Past Events' : 'Events')
+@section('title', $showPast ? __('Past Events') : __('Events'))
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/pages.css') }}">
@@ -8,14 +8,14 @@
 
 @section('content')
     @include('partials.page-hero', [
-        'title' => 'Discover Events for Your Big Ideas',
-        'crumbs' => ['Events' => null],
+        'title' => __('Discover Events for Your Big Ideas'),
+        'crumbs' => [__('Events') => null],
     ])
 
     <section class="page-section">
         <nav class="event-tabs" aria-label="Event filter">
-            <a href="{{ route('events.index') }}" @class(['tab-btn', 'active' => ! $showPast])>Upcoming</a>
-            <a href="{{ route('events.index', ['when' => 'past']) }}" @class(['tab-btn', 'active' => $showPast])>Past Events</a>
+            <a href="{{ route('events.index') }}" @class(['tab-btn', 'active' => ! $showPast])>{{ __('Upcoming') }}</a>
+            <a href="{{ route('events.index', ['when' => 'past']) }}" @class(['tab-btn', 'active' => $showPast])>{{ __('Past Events') }}</a>
         </nav>
 
         @if ($events->isNotEmpty())
@@ -27,7 +27,7 @@
             {{ $events->links() }}
         @else
             <p class="empty-state">
-                {{ $showPast ? 'No past events yet.' : 'No upcoming events right now. Check back soon!' }}
+                {{ $showPast ? __('No past events yet.') : __('No upcoming events right now. Check back soon!') }}
             </p>
         @endif
     </section>

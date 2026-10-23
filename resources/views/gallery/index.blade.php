@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    @include('partials.page-hero', ['title' => 'Stories from Previous Events', 'crumbs' => ['Gallery' => null]])
+    @include('partials.page-hero', ['title' => __('Stories from Previous Events'), 'crumbs' => [__('Gallery') => null]])
 
     <section class="page-section">
         @if ($photos->isNotEmpty())
@@ -20,7 +20,7 @@
             </div>
             {{ $photos->links() }}
         @else
-            <p class="empty-state">Photos will be added after our next event.</p>
+            <p class="empty-state">{{ __('Photos will be added after our next event.') }}</p>
         @endif
     </section>
 @endsection

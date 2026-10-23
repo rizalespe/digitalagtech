@@ -27,9 +27,9 @@
         <div class="hero-gradient"></div>
         <div class="hero-text">
             <div class="hero-content">
-                <h1 class="hero-title">Be the Next <em>Agritech</em><br>Changemaker.</h1>
-                <p class="hero-sub">Join the next generation of agritech innovators — learn, connect, and build what matters.</p>
-                <a href="#events" class="btn btn-primary">Discover More <x-icon name="arrow-right" /></a>
+                <h1 class="hero-title">{{ __('Be the Next Agritech Changemaker.') }}</h1>
+                <p class="hero-sub">{{ __('Join the next generation of agritech innovators — learn, connect, and build what matters.') }}</p>
+                <a href="#events" class="btn btn-primary">{{ __('Discover More') }} <x-icon name="arrow-right" /></a>
             </div>
         </div>
         <div class="hero-dots">
@@ -45,7 +45,7 @@
             <div class="wrap">
                 <div class="current-event-grid">
                     <div>
-                        <p class="current-event-label">Current Event</p>
+                        <p class="current-event-label">{{ __('Current Event') }}</p>
                         <h2 class="current-event-title">{{ $featuredEvent->title }}</h2>
                         <div class="current-event-body">{!! $featuredEvent->description !!}</div>
                         @if ($featuredEvent->workshop_cities)
@@ -56,8 +56,8 @@
                             </div>
                         @endif
                         <div class="event-cta-row">
-                            <a href="{{ route('events.show', $featuredEvent) }}#register" class="btn btn-primary">Register to Join <x-icon name="arrow-right" /></a>
-                            <a href="{{ route('events.show', $featuredEvent) }}" class="btn btn-lime">View Event <x-icon name="arrow-right" /></a>
+                            <a href="{{ route('events.show', $featuredEvent) }}#register" class="btn btn-primary">{{ __('Register to Join') }} <x-icon name="arrow-right" /></a>
+                            <a href="{{ route('events.show', $featuredEvent) }}" class="btn btn-lime">{{ __('View Event') }} <x-icon name="arrow-right" /></a>
                         </div>
                     </div>
                     @if ($featuredEvent->flyer_url)
@@ -76,8 +76,8 @@
             <div class="wrap">
                 <div class="schedule-grid">
                     <div class="schedule-left">
-                        <p class="eyebrow">Event Schedule</p>
-                        <h2 class="section-title">Event Schedule</h2>
+                        <p class="eyebrow">{{ __('Event Schedule') }}</p>
+                        <h2 class="section-title">{{ __('Event Schedule') }}</h2>
                         <div class="schedule-events">
                             @foreach ($events as $event)
                                 <a href="{{ route('events.show', $event) }}" class="schedule-event">
@@ -107,10 +107,10 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <p class="eyebrow">Our Speakers</p>
-                        <h2 class="section-title">Meet Our Speakers</h2>
+                        <p class="eyebrow">{{ __('Our Speakers') }}</p>
+                        <h2 class="section-title">{{ __('Meet Our Speakers') }}</h2>
                     </div>
-                    <a href="{{ route('speakers.index') }}" class="btn btn-outline btn-sm">View All Speakers <x-icon name="arrow-right" /></a>
+                    <a href="{{ route('speakers.index') }}" class="btn btn-outline btn-sm">{{ __('View All Speakers') }} <x-icon name="arrow-right" /></a>
                 </div>
                 <div class="speakers-grid">
                     @foreach ($speakers as $speaker)
@@ -135,14 +135,14 @@
                     @endforeach
                 </div>
                 <div class="about-content">
-                    <p class="eyebrow">About</p>
-                    <h2>Your Gateway to the AgTech Ecosystem</h2>
-                    <p class="about-body">A platform for discovering AgTech events and programs designed to help young innovators learn, connect, and grow.</p>
+                    <p class="eyebrow">{{ __('About') }}</p>
+                    <h2>{{ __('Your Gateway to the AgTech Ecosystem') }}</h2>
+                    <p class="about-body">{{ __('A platform for discovering AgTech events and programs designed to help young innovators learn, connect, and grow.') }}</p>
                     <div class="about-images">
                         <div class="about-img"><img src="{{ asset('images/pages/about-1.jpg') }}" alt="Peserta event Digital Agtech Indonesia" loading="lazy"></div>
                         <div class="about-img"><img src="{{ asset('images/pages/about-2.jpg') }}" alt="Sesi brainstorming dengan sticky notes" loading="lazy"></div>
                     </div>
-                    <a href="{{ route('programs.self-learning') }}" class="btn btn-primary">Discover More <x-icon name="arrow-right" /></a>
+                    <a href="{{ route('programs.self-learning') }}" class="btn btn-primary">{{ __('Discover More') }} <x-icon name="arrow-right" /></a>
                 </div>
             </div>
         </div>
@@ -153,13 +153,13 @@
         <div class="wrap">
             <div class="section-head section-head--center">
                 <div>
-                    <p class="eyebrow">Upcoming Events</p>
-                    <h2 class="section-title">Discover Events for Your Big Ideas</h2>
+                    <p class="eyebrow">{{ __('Upcoming Events') }}</p>
+                    <h2 class="section-title">{{ __('Discover Events for Your Big Ideas') }}</h2>
                 </div>
             </div>
             @if ($events->isNotEmpty())
                 <div class="event-tabs" role="tablist">
-                    <button class="tab-btn active" data-type="all">All</button>
+                    <button class="tab-btn active" data-type="all">{{ __('All') }}</button>
                     @foreach (\App\Enums\EventType::cases() as $type)
                         <button class="tab-btn" data-type="{{ $type->value }}">{{ $type->label() }}</button>
                     @endforeach
@@ -170,7 +170,7 @@
                     @endforeach
                 </div>
             @else
-                <p class="empty-state">New events are coming soon. Stay tuned!</p>
+                <p class="empty-state">{{ __('New events are coming soon. Stay tuned!') }}</p>
             @endif
         </div>
     </section>
@@ -181,10 +181,10 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <p class="eyebrow">Event Gallery</p>
-                        <h2 class="section-title">Stories from Previous Events</h2>
+                        <p class="eyebrow">{{ __('Event Gallery') }}</p>
+                        <h2 class="section-title">{{ __('Stories from Previous Events') }}</h2>
                     </div>
-                    <a href="{{ route('gallery.index') }}" class="btn btn-outline btn-sm">View All Photos <x-icon name="arrow-right" /></a>
+                    <a href="{{ route('gallery.index') }}" class="btn btn-outline btn-sm">{{ __('View All Photos') }} <x-icon name="arrow-right" /></a>
                 </div>
                 <div class="gallery-grid">
                     @foreach ($photos as $photo)
@@ -199,8 +199,8 @@
     @if ($partners->isNotEmpty())
         <section class="partners" id="partners">
             <div class="wrap">
-                <p class="eyebrow">Our Partners</p>
-                <h2 class="section-title">Proudly Supported By</h2>
+                <p class="eyebrow">{{ __('Our Partners') }}</p>
+                <h2 class="section-title">{{ __('Proudly Supported By') }}</h2>
                 <div class="partners-logos">
                     @foreach ($partners as $partner)
                         @if ($partner->website_url)
@@ -220,10 +220,10 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <p class="eyebrow">News</p>
-                        <h2 class="section-title">Latest News &amp; Insights</h2>
+                        <p class="eyebrow">{{ __('News') }}</p>
+                        <h2 class="section-title">{{ __('Latest News & Insights') }}</h2>
                     </div>
-                    <a href="{{ route('news.index') }}" class="btn btn-outline btn-sm">View All News <x-icon name="arrow-right" /></a>
+                    <a href="{{ route('news.index') }}" class="btn btn-outline btn-sm">{{ __('View All News') }} <x-icon name="arrow-right" /></a>
                 </div>
                 <div class="news-grid">
                     @foreach ($posts as $post)
