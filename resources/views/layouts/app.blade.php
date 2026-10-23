@@ -17,6 +17,7 @@
     @stack('styles')
 </head>
 <body class="@yield('body_class')">
+    @include('partials.collab-bar')
     @include('partials.navbar')
     @include('partials.flash')
 
