@@ -168,17 +168,20 @@ a { color: inherit; text-decoration: none; }
   z-index: 200;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
+  gap: 12px;
   height: 56px;
-  padding-inline: 20px;
+  padding-inline: 16px;
   background: #f5f7f2;
   border-bottom: 1px solid #dde8d5;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.collab-label { font-size: 12px; color: var(--fg-muted); white-space: nowrap; flex-shrink: 0; }
-.collab-logos { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
-.collab-logo { display: block; height: 40px !important; width: auto !important; max-width: 160px; object-fit: contain; flex-shrink: 0; }
+.collab-bar::-webkit-scrollbar { display: none; }
+.collab-label { font-size: 11px; color: var(--fg-muted); white-space: nowrap; flex-shrink: 0; }
+.collab-logos { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.collab-logo { display: block; height: 36px !important; width: auto !important; max-width: 140px; object-fit: contain; flex-shrink: 0; }
 
 .navbar {
   position: sticky;
