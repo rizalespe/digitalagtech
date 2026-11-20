@@ -92,8 +92,16 @@ class AssessmentController extends Controller
         return redirect()->route('assessment.result', $attempt);
     }
 
-    public function result(AssessmentAttempt $attempt): View
+    public function result(Request $request, AssessmentAttempt $attempt): View
     {
+        // Only the owner may view an attempt. Respond 404 (not 403) so attempt IDs
+        // belonging to other users cannot be enumerated. Legacy guest attempts
+        // (user_id = null) are not viewable by anyone through this route.
+        abort_if(
+            $attempt->user_id === null || (int) $attempt->user_id !== (int) $request->user()->id,
+            404
+        );
+
         $attempt->load('answers.option', 'answers.question.dimension');
 
         $upcomingEvents = Event::published()
